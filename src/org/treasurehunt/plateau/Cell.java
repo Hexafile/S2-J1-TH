@@ -26,6 +26,7 @@ public class Cell {
 	
 	Cell(){}
 
+
 	
 	public boolean isBase(){
 		return !(this.base == 0);
