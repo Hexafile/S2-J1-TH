@@ -60,7 +60,7 @@ public class Cell {
 		this.base = base;
 	}
 	
-	public boolean getRevealed() {
+	public boolean isRevealed() {
 		return revealed;
 	}
 }

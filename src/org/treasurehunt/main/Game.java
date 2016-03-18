@@ -8,6 +8,6 @@ public class Game {
 
 		Board b = new Board();
 		System.out.println(b.toString());
-		//Gui g = new Gui(b);
+		new Gui(b);
 	}
 }

@@ -2,16 +2,14 @@ package org.treasurehunt.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,15 +17,10 @@ import org.treasurehunt.plateau.Board;
 
 //@author Thomas Plouchart
 public class Gui extends JFrame {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Frame f = new Frame();
+	public JFrame f = new JFrame();
 	private JPanel pane;
+	private JComponent jeu;
 	private Board bd = new Board();;
-	private Component jeu;
 	private boolean start = true;
 
 	public Image sea;
@@ -45,49 +38,60 @@ public class Gui extends JFrame {
 
 			start = false;
 
-			try {
-				Image sea = ImageIO.read(new File("img/sea.jpg"));
-				Image sand = ImageIO.read(new File("img/sand.jpg"));
-				Image chest = ImageIO.read(new File("img/chest.png"));
-				Image rock = ImageIO.read(new File("img/rock.png"));
-				Image key = ImageIO.read(new File("img/key.png"));
-				Image base = ImageIO.read(new File("img/base.png"));
-				Image lineV = ImageIO.read(new File("img/line.png"));
-				Image lineH = ImageIO.read(new File("img/lineH.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sea = Toolkit.getDefaultToolkit().getImage("img/sea.jpg");
+			sand = Toolkit.getDefaultToolkit().getImage("img/sand.jpg");
+			chest = Toolkit.getDefaultToolkit().getImage("img/chest.png");
+			rock = Toolkit.getDefaultToolkit().getImage("img/rock.png");
+			key = Toolkit.getDefaultToolkit().getImage("img/key.png");
+			base = Toolkit.getDefaultToolkit().getImage("img/base.png");
+			lineV = Toolkit.getDefaultToolkit().getImage("img/line.png");
+			lineH = Toolkit.getDefaultToolkit().getImage("img/lineH.png");
 		}
 
-		jeu = new Component() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+		jeu = new JComponent() {
 
-			public void paint(Graphics g) {
-				g.drawImage(sea, 0, 0, null);
-				for (int i = 0; i < bd.getSizeHeight() + 2; i++) {
-					for (int j = 0; j < bd.getSizeWidth() + 2; j++) {
-						if (bd.getCell(i, j).getObstacle()==4 ||bd.getCell(i, j).isBase()){
-							g.drawImage(sea, i * 40, j * 40, null);
-						}else{
-							g.drawImage(sand, i * 40, j * 40, null);
+			public void paint(Graphics g1) {
+
+				Graphics2D g = (Graphics2D) g1;
+				super.paint(g);
+				g.drawImage(sea, 10, 10, this);
+				g.setColor(Color.WHITE);
+				g.drawString("lololol", 100, 100);
+
+				for (int i = 0; i < bd.getSizeWidth() + 2; i++) {
+					for (int j = 0; j < bd.getSizeHeight() + 2; j++) {
+
+						// Detect the Cell if is water else display sand
+						if (bd.getCell(j, i).getObstacle() == 4
+								|| bd.getCell(j, i).isBase()) {
+							g.drawImage(sea, i * 40, j * 40, this);
+						} else {
+							g.drawImage(sand, i * 40, j * 40, this);
 						}
-						if (!(bd.getCell(i, j).getObstacle()==0 || bd.getCell(i, j).getObstacle()==4)
-								&& !bd.getCell(i, j).getRevealed()){
-							g.drawImage(rock, i * 40, j * 40, null);
+
+						// display rock
+						if (!(bd.getCell(j, i).getObstacle() == 0 || bd
+								.getCell(j, i).getObstacle() == 4)) {
+							if (bd.isRevealed()) {
+								if (bd.getCell(j, i).getObstacle() == 2)
+									g.drawImage(key, i * 40, j * 40, this);
+								if (bd.getCell(j, i).getObstacle() == 3)
+									g.drawImage(chest, i * 40, j * 40, this);
+							} else {
+								g.drawImage(rock, i * 40, j * 40, this);
+							}
 						}
-						if (bd.getCell(i, j).isBase()){
-							g.drawImage(base, i * 40, j * 40, null);
+						// Display base
+						if (bd.getCell(j, i).isBase()) {
+							g.drawImage(base, i * 40, j * 40, this);
 						}
-						
-						if (i != 0){
-							g.drawImage(lineV, i * 40, j * 40, null);
+
+						// Display grid
+						if (i != 0) {
+							g.drawImage(lineV, i * 40, j * 40, this);
 						}
-						if (j != 0){
-							g.drawImage(lineH, i * 40, j * 40, null);
+						if (j != 0) {
+							g.drawImage(lineH, i * 40, j * 40, this);
 						}
 					}
 				}
@@ -99,12 +103,13 @@ public class Gui extends JFrame {
 				System.exit(1);
 			}
 		});
+
 		pane = new JPanel();
+		pane.setBackground(Color.BLACK);
 		pane.setLayout(new BorderLayout(1, 1));
 		pane.add(jeu);
-		f.setBackground(Color.BLACK);
 		f.add(pane);
-		f.setSize(bd.getSizeHeight() * 40 + 80, bd.getSizeWidth() * 40 + 80);
+		f.setSize(bd.getSizeHeight() * 40 + 85, bd.getSizeWidth() * 40 + 110);
 		f.setResizable(false);
 		f.setTitle("Treasure Hunt");
 		f.setLocation(200, 200);
