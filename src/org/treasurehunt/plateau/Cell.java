@@ -20,13 +20,33 @@ public class Cell {
 	 */
 	private int base = 0;
 	
+	/**
+	 * 0 for no one
+	 * 1 for team 1
+	 * 2 for team 2
+	 * 3 for both team
+	 */
+	private int visible = 0;
+	
 	private boolean revealed = false;
 	
-	// private Unit unit;
+	private boolean reachable = true; 
+	
+	private Character character = null;
+	
+
+	
 	
 	Cell(){}
 
 
+	public int getVisible() {
+		return this.visible;
+	}
+	
+	public void setVisible(int visible) {
+		this.visible=visible;
+	}
 	
 	public boolean isBase(){
 		return !(this.base == 0);
@@ -50,8 +70,24 @@ public class Cell {
 
 	public void setObstacle(int obstacle) {
 		this.obstacle = obstacle;
+		if (obstacle!=0) this.reachable=false;
+	}
+	
+	public boolean getReachable () {
+		return this.reachable;
+	}
+	
+	public Character getCharacter() {
+		return this.character;
 	}
 
+	public void setCharacter(Character character) {
+		this.character=character;
+	}
+	
+	public void deleteCharacter() {
+		this.character=null; 
+	}
 	public int getBase() {
 		return base;
 	}

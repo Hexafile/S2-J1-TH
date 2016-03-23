@@ -3,22 +3,33 @@ package org.treasurehunt.plateau;
 import java.util.Random;
 
 //@author Thomas Plouchart
+/**
+ * @author Samson
+ *
+ */
 public class Board extends Cell {
 
 	/** the size of the board in height. */
-	private int sizeHeight = 10;
+	private int sizeHeight = 20;
 
 	/** the size of the board in width. */
-	private int sizeWidth = 10;
+	private int sizeWidth = 20;
 
 	/** percentage of rocks on the board */
-	private int percentage = 10;
+	private int percentage = 15;
 
 	/** an array of Cell for store the grind. */
-	private Cell[][] board;
+	private static Cell[][] board;
+	
+	private int base1;
+
+	private int base2;
 
 
 	public Board() {
+		Random rdm = new Random();
+		this.base1=rdm.nextInt(sizeHeight) + 1;
+		this.base2=rdm.nextInt(sizeHeight) + 1;
 		generate();
 	}
 
@@ -28,13 +39,35 @@ public class Board extends Cell {
 	 * @param width
 	 */
 	public Board(int height, int width) {
+		Random rdm = new Random();
 		if (height > 2) {
 			sizeHeight = height;
 		}
 		if (width > 2) {
 			sizeWidth = width;
 		}
+		this.base1=rdm.nextInt(sizeHeight) + 1;
+		this.base2=rdm.nextInt(sizeHeight) + 1;
 		generate();
+		
+	}
+	 
+	/**
+	 * @return the ordinate of team 1's base
+	 */
+	public int getBase1 () {
+		return this.base1;
+	}
+	
+	/**
+	 * @return the ordinate of team 2's base
+	 */
+	public int getBase2 () {
+		return this.base2;
+	}
+	
+	public static Cell[][] getBoard() {
+		return board;
 	}
 
 	/**
@@ -54,6 +87,7 @@ public class Board extends Cell {
 				for (int j = 0; j < sizeWidth +2; j++) {
 					if (j == 0 || i == 0 || i == sizeHeight + 1 || j == sizeWidth + 1) {  //If it's the border put sea
 						board[i][j].setObstacle(4);
+						board[i][j].setBase(0);
 					} else {
 						board[i][j].setObstacle(0); //Else put herb
 					}
@@ -62,17 +96,15 @@ public class Board extends Cell {
 			Random rdm = new Random();
 			
 			
-			board[rdm.nextInt(sizeHeight) + 1][0].setBase(1); //Randomly set the position of team 1's boat
-			board[rdm.nextInt(sizeHeight) + 1][sizeWidth+1].setBase(2); // Randomly set the position of team 2's boat
+			board[base1][0].setBase(1); //Randomly set the position of team 1's boat
+			board[base2][sizeWidth+1].setBase(2); // Randomly set the position of team 2's boat
 			
 			
 			int rocks = 0;
 			while (rocks < rocksNb ) {
 				int x = rdm.nextInt(sizeWidth) + 1;
 				int y = rdm.nextInt(sizeHeight) + 1;
-				if (board[x][y].getObstacle() != 3
-						&& !(board[x][y - 1].isBase())
-						&& ! board[x][y + 1].isBase()) { //If it's not already a rock and it doesn't block a boat
+				if (board[x][y].getObstacle() != 3 && !(board[x][y - 1].isBase() && ! (board[x][y + 1].isBase()))) { //If it's not already a rock and it doesn't block a boat
 							board[x][y].setObstacle(1);
 					rocks++;
 				}
