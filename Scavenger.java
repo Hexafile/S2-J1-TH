@@ -1,62 +1,75 @@
 package org.treasurehunt.character;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.treasurehunt.plateau.Board;
 import org.treasurehunt.plateau.Cell;
 
-public class Scavenger extends Character{
+public class Scavenger extends Character {
+	private int x;
+	private int y;
+	private int mouv = 1;
+	private int piege = 2;
 
 	public Scavenger(int team, int regenBase, int maxEng) {
 		super(team, regenBase, maxEng);
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public boolean canMove() {
-		// TODO Auto-generated method stub
+		if (Board.getBoard()[x - 1][y - 1].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x - 1][y].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x - 1][y + 1].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x][y - 1].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x][y + 1].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x + 1][y - 1].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x + 1][y].getReachable()) {
+			return true;
+		} else if (Board.getBoard()[x + 1][y + 1].getReachable()) {
+			return true;
+		}
+
 		return false;
 	}
 
-	@Override
 	public List<Integer> getAvailableAtacks() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
-	@Override
 	public List<Integer> getAvailableMove() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> actions = new ArrayList<>();
+		if(canMove()){
+			actions.add(1);
+		} else if(Board.getBoard()[x][y] == null){
+			actions.add(2);
+		}
+		return actions;
 	}
 
-	@Override
-	public Cell getCell() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getCostAction() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
-	@Override
 	public int getCostMoving() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
-	@Override
 	public int getDamageTaken() {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+	public Cell getCell() {
+		return Board.getBoard()[x][y];
 	}
 
 }
