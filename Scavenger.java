@@ -19,19 +19,26 @@ public class Scavenger extends Character {
 	public boolean canMove() {
 		if (Board.getBoard()[x - 1][y - 1].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x - 1][y].getReachable()) {
+		} 
+		if (Board.getBoard()[x - 1][y].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x - 1][y + 1].getReachable()) {
+		} 
+		if (Board.getBoard()[x - 1][y + 1].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x][y - 1].getReachable()) {
+		} 
+		if (Board.getBoard()[x][y - 1].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x][y + 1].getReachable()) {
+		} 
+		if (Board.getBoard()[x][y + 1].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x + 1][y - 1].getReachable()) {
+		} 
+		if (Board.getBoard()[x + 1][y - 1].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x + 1][y].getReachable()) {
+		} 
+		if (Board.getBoard()[x + 1][y].getReachable()) {
 			return true;
-		} else if (Board.getBoard()[x + 1][y + 1].getReachable()) {
+		}
+		if (Board.getBoard()[x + 1][y + 1].getReachable()) {
 			return true;
 		}
 
