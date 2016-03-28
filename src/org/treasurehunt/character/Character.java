@@ -48,10 +48,12 @@ public boolean[][] getMoves () {
 
 public void move (int x, int y) {
 	this.setVisible(true);
+	Board.getBoard()[this.y][this.y].setReachable(true);
 	Board.getBoard()[this.y][this.x].setCharacter(null);
 	this.x=x;
 	this.y=y;
 	Board.getBoard()[x][y].setCharacter(this);
+	Board.getBoard()[this.y][this.y].setReachable(false);
 	this.setVisible(false);
 }
 

@@ -79,6 +79,10 @@ public class Cell {
 		return this.reachable;
 	}
 	
+	public void setReachable (boolean reachable) {
+		this.reachable=reachable;
+	}
+	
 	public Character getCharacter() {
 		return this.character;
 	}
