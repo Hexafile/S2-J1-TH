@@ -1,5 +1,5 @@
 package org.treasurehunt.character;
-import org.treasurehunt.plateau.*;
+import org.treasurehunt.plateau.Board;
 
 public class Character {
 	private int team; 
@@ -47,15 +47,29 @@ public boolean[][] getMoves () {
 }
 
 public void move (int x, int y) {
+	this.setVisible(true);
 	Board.getBoard()[this.y][this.x].setCharacter(null);
 	this.x=x;
 	this.y=y;
 	Board.getBoard()[x][y].setCharacter(this);
+	this.setVisible(false);
 }
 
 public void setVisible(boolean clean) {
 	if (clean) {
-		Board.getBoard()[y][x].setVisible(Board.getBoard()[y][x].getVisible()-this.team); // c'est la bonne commande reste juste à regarder comment l'appliquer
+		for (int i=0; i<5; i++) {
+			for (int j=0; j<5; j++) {
+				if (Math.sqrt( (double) ((i-this.getX()) * (i-this.getX()) + (j-this.getY())*(j-getY() ))) < 3.0 )
+				Board.getBoard()[y][x].setVisible(Board.getBoard()[y][x].getVisible()-this.team);
+			}
+		}
+	} else {
+		for (int i=0; i<5; i++) {
+			for (int j=0; j<5; j++) {
+				if (Math.sqrt( (double) ((i-this.getX()) * (i-this.getX()) + (j-this.getY())*(j-getY() ))) < 3.0 )
+				Board.getBoard()[y][x].setVisible(this.team);
+			}
+		}
 	}
 }
 }
