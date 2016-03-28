@@ -40,17 +40,23 @@ public boolean[][] getMoves () {
 	boolean[][] moves = new boolean[3][3];
 	for (int i=0; i<3; i++ ) {
 		for (int j=0; j<3; j++) {
-			if (Board.getBoard()[x-1+i][y-1+1].getReachable()) moves[i][j]=true;
+			if (Board.getBoard()[x-1+i][y-1+j].getReachable()) moves[i][j]=true;
 		}
 	}
 	return moves;
 }
 
 public void move (int x, int y) {
-	Board.getBoard()[this.y][this.x].setCharacter(null);;
+	Board.getBoard()[this.y][this.x].setCharacter(null);
 	this.x=x;
 	this.y=y;
-	Board.getBoard()[x][y].setCharacter(this); // Je vois pas pourquoi ça marche pas...
+	Board.getBoard()[x][y].setCharacter(this);
+}
+
+public void setVisible(boolean clean) {
+	if (clean) {
+		Board.getBoard()[y][x].setVisible(Board.getBoard()[y][x].getVisible()-this.team); // c'est la bonne commande reste juste à regarder comment l'appliquer
+	}
 }
 }
 

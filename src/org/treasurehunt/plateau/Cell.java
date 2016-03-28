@@ -1,5 +1,7 @@
 package org.treasurehunt.plateau;
 
+import org.treasurehunt.character.Character;
+
 public class Cell {
 
 	private boolean trap = false;
@@ -81,8 +83,8 @@ public class Cell {
 		return this.character;
 	}
 
-	public void setCharacter(Character character) {
-		this.character=character;
+	public void setCharacter(Character character2) {
+		this.character=character2;
 	}
 	
 	public void deleteCharacter() {
