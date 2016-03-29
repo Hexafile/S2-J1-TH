@@ -20,6 +20,7 @@ public class Gui extends JFrame {
 	public JFrame f = new JFrame();
 	private JPanel pane;
 	private JComponent jeu;
+	private JComponent menu;
 	private Board bd = new Board();;
 	private boolean start = true;
 
@@ -29,6 +30,7 @@ public class Gui extends JFrame {
 	public Image key;
 	public Image rock;
 	public Image base;
+	public Image soldat;
 	public Image lineV;
 	public Image lineH;
 
@@ -46,6 +48,7 @@ public class Gui extends JFrame {
 			base = Toolkit.getDefaultToolkit().getImage("img/base.png");
 			lineV = Toolkit.getDefaultToolkit().getImage("img/line.png");
 			lineH = Toolkit.getDefaultToolkit().getImage("img/lineH.png");
+			soldat = Toolkit.getDefaultToolkit().getImage("img/soldat.png");
 		}
 
 		jeu = new JComponent() {
@@ -93,6 +96,7 @@ public class Gui extends JFrame {
 						if (j != 0) {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
+						if (bd.getCell(j,i).hasCharacter()){g.drawImage(soldat, i * 40, j * 40, this);System.out.println("woooaaaa");}
 					}
 				}
 			}
@@ -104,12 +108,11 @@ public class Gui extends JFrame {
 			}
 		});
 
-		pane = new JPanel();
-		pane.setBackground(Color.BLACK);
-		pane.setLayout(new BorderLayout(1, 1));
-		pane.add(jeu);
-		f.add(pane);
-		f.setSize(bd.getSizeHeight() * 40 + 85, bd.getSizeWidth() * 40 + 110);
+		//f.setLayout(new BorderLayout(1,1));
+		jeu.setSize(bd.getSizeHeight() * 40 + 285, bd.getSizeWidth() * 40 + 110);
+		jeu.setBackground(new Color(116, 208, 241));
+		f.add(jeu);
+		f.setSize(jeu.getWidth(), jeu.getHeight());
 		f.setResizable(false);
 		f.setTitle("Treasure Hunt");
 		f.setLocation(200, 200);

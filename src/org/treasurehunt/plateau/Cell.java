@@ -1,6 +1,9 @@
 package org.treasurehunt.plateau;
 
-import org.treasurehunt.character.Character;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.treasurehunt.character.Explorer;
 
 public class Cell {
 
@@ -22,33 +25,13 @@ public class Cell {
 	 */
 	private int base = 0;
 	
-	/**
-	 * 0 for no one
-	 * 1 for team 1
-	 * 2 for team 2
-	 * 3 for both team
-	 */
-	private int visible = 0;
-	
 	private boolean revealed = false;
 	
-	private boolean reachable = true; 
-	
-	private Character character = null;
-	
-
-	
+	private List<Character> characters = new ArrayList<Character>();
 	
 	Cell(){}
 
 
-	public int getVisible() {
-		return this.visible;
-	}
-	
-	public void setVisible(int visible) {
-		this.visible=visible;
-	}
 	
 	public boolean isBase(){
 		return !(this.base == 0);
@@ -72,28 +55,8 @@ public class Cell {
 
 	public void setObstacle(int obstacle) {
 		this.obstacle = obstacle;
-		if (obstacle!=0) this.reachable=false;
-	}
-	
-	public boolean getReachable () {
-		return this.reachable;
-	}
-	
-	public void setReachable (boolean reachable) {
-		this.reachable=reachable;
-	}
-	
-	public Character getCharacter() {
-		return this.character;
 	}
 
-	public void setCharacter(Character character2) {
-		this.character=character2;
-	}
-	
-	public void deleteCharacter() {
-		this.character=null; 
-	}
 	public int getBase() {
 		return base;
 	}
@@ -104,5 +67,22 @@ public class Cell {
 	
 	public boolean isRevealed() {
 		return revealed;
+	}
+	
+	public void addExplorer(Explorer explorer){
+		if(characters.isEmpty())characters.add(explorer);
+	}
+	
+	public void removeCharacter(){
+		if(!characters.isEmpty())characters.remove(0);
+	}
+	
+	public void changeExplorer(Explorer explorer){
+		removeCharacter();
+		addExplorer(explorer);
+	}
+	
+	public boolean hasCharacter(){
+		return !(characters.isEmpty());
 	}
 }
