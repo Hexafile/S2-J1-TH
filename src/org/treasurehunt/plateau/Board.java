@@ -53,18 +53,13 @@ public class Board extends Cell {
 	}
 	 
 	/**
-	 * @return the ordinate of team 1's base
+	 * @return the ordinate of team base
 	 */
-	public int getBase1 () {
-		return this.base1;
+	public int getBase (int team) {
+		if (team==2) return this.base2;
+		else return this.base1;
 	}
 	
-	/**
-	 * @return the ordinate of team 2's base
-	 */
-	public int getBase2 () {
-		return this.base2;
-	}
 	
 	public static Cell[][] getBoard() {
 		return board;
@@ -96,8 +91,8 @@ public class Board extends Cell {
 			Random rdm = new Random();
 			
 			
-			board[base1][0].setBase(1); //Randomly set the position of team 1's boat
-			board[base2][sizeWidth+1].setBase(2); // Randomly set the position of team 2's boat
+			board[base1][0] = new Base(1); //Randomly set the position of team 1's boat
+			board[base2][sizeWidth+1] = new Base(2); // Randomly set the position of team 2's boat
 			
 			
 			int rocks = 0;

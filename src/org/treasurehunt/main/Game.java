@@ -31,7 +31,11 @@ public class Game {
 		}*/
 		
 		for(int i = 0; i<l.get(0);i++){
-			b.getBase(0).addExplorer(new Explorer(0, 0, 0));;
+			Board.getBoard()[b.getBase(1)][0].setCharacter(new Explorer(0, 0, 0));
+		}
+		
+		for(int i = 0; i<l.get(0);i++){
+			Board.getBoard()[b.getBase(2)][b.getSizeWidth()-1].setCharacter(new Explorer(0, 0, 0));
 		}
 		
 		

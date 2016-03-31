@@ -47,18 +47,18 @@ public boolean[][] getMoves () {
 }
 
 public void move (int x, int y) {
-	this.setVisible(true);
+	this.setVisible(false);
 	Board.getBoard()[this.y][this.y].setReachable(true);
-	Board.getBoard()[this.y][this.x].setCharacter(null);
+	Board.getBoard()[this.y][this.x].deleteCharacter(this);
 	this.x=x;
 	this.y=y;
-	Board.getBoard()[x][y].setCharacter(this);
 	Board.getBoard()[this.y][this.y].setReachable(false);
-	this.setVisible(false);
+	Board.getBoard()[this.y][this.x].setCharacter(this);
+	this.setVisible(true);
 }
 
-public void setVisible(boolean clean) {
-	if (clean) {
+public void setVisible(boolean refresh) {
+	if (!refresh) {
 		for (int i=0; i<5; i++) {
 			for (int j=0; j<5; j++) {
 				if (Math.sqrt( (double) ((i-this.getX()) * (i-this.getX()) + (j-this.getY())*(j-getY() ))) < 3.0 )
@@ -75,4 +75,3 @@ public void setVisible(boolean clean) {
 	}
 }
 }
-

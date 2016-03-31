@@ -96,7 +96,7 @@ public class Gui extends JFrame {
 						if (j != 0) {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
-						if (bd.getCell(j,i).hasCharacter()){g.drawImage(soldat, i * 40, j * 40, this);System.out.println("woooaaaa");}
+						if (bd.getCell(j,i).getCharacter() != null){g.drawImage(soldat, i * 40, j * 40, this);System.out.println("woooaaaa");}
 					}
 				}
 			}
