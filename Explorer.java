@@ -1,73 +1,25 @@
 package org.treasurehunt.character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.treasurehunt.plateau.Board;
 import org.treasurehunt.plateau.Cell;
 
 public class Explorer extends Character{
-	private int x;
-	private int y;
-	private int mouv = 1;
-	private int souleve = 2;
+	public int x;
+	public int y;
+
+	public Explorer(int team, int x, int y) {
+		super(team, x, y);
+	}
 	
-	public Explorer(int team, int regenBase, int maxEng) {
-		super(team, regenBase, maxEng);
-	}
-
-	public int getCostAction() {
-
-		return 0;
-	}
-
-
-	public int getCostMoving() {
-
-		return 0;
-	}
-
-	
-	public int getDamageTaken() {
-
-		return 0;
-	}
-
-	public boolean canMove() {
-		if (Board.getBoard()[x-1][y].getReachable()){
-			return true;
-		} 
-		if (Board.getBoard()[x+1][y].getReachable()){
-			return true;
+	public boolean[][] getAct () {
+		boolean[][] act = new boolean[3][3];
+		for (int i=0; i<3; i++ ) {
+			for (int j=0; j<3; j++) {
+				if (Board.getBoard()[x-1+i][y-1+j].getObstacle()>0 && Board.getBoard()[x-1+i][y-1+j].getObstacle() <4) act[i][j]=true;
+			}
 		}
-		if (Board.getBoard()[x][y-1].getReachable()){
-			return true;
-		} 
-		if (Board.getBoard()[x][y+1].getReachable()){
-			return true;
-		}
-		return false;	
+		return act;
 	}
-
-
-	public List<Integer> getAvailableAtacks() {
-	
-		return null;
-	}
-
-
-	public List<Integer> getAvailableMove() {
-		List<Integer> actions = new ArrayList<>();
-		if(canMove()){
-			actions.add(1);
-		} else if(Board.getBoard()[x][y] == null){
-			actions.add(2);
-		}
-		return actions;
-	}
-
-	public Cell getCell() {
-		return Board.getBoard()[x][y];
-	}
-
 }
