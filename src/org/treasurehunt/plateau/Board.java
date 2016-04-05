@@ -61,7 +61,7 @@ public class Board extends Cell {
 	}
 	
 	
-	public static Cell[][] getBoard() {
+	public Cell[][] getBoard() {
 		return board;
 	}
 
@@ -90,9 +90,8 @@ public class Board extends Cell {
 			}
 			Random rdm = new Random();
 			
-			
-			board[base1][0] = new Base(1); //Randomly set the position of team 1's boat
-			board[base2][sizeWidth+1] = new Base(2); // Randomly set the position of team 2's boat
+			board[base1][0].setBase(1); //Randomly set the position of team 1's boat
+			board[base2][sizeWidth+1].setBase(2); // Randomly set the position of team 2's boat
 			
 			
 			int rocks = 0;
@@ -234,7 +233,11 @@ public class Board extends Cell {
 			for (int j = 0; j < board[0].length; j++) {
 				ret += "|";
 				if (board[i][j].isBase()) {
+					if(board[i][j].getCharacter() != null){
+						ret += " C ";
+					}else{
 					ret += " B ";
+					}
 				} else {
 					if (board[i][j].isObstacle()) {
 						// don't touch
@@ -248,7 +251,9 @@ public class Board extends Cell {
 						} else {
 							ret += " R ";
 						}
-					} else {
+					} else if(board[i][j].getCharacter()!= null){
+						ret += " P ";
+					}else{
 						ret += "   ";
 					}
 				}

@@ -88,8 +88,9 @@ public class Cell {
 	}
 
 	public void setCharacter(Character character2) {
-		if (this instanceof Base) Base.addCharacter(character2);
-		else this.character=character2;
+		/*if (this instanceof Base) Base.addCharacter(character2);
+		else this.character=character2;*/
+		this.character=character2;
 	}
 	
 	public void deleteCharacter(Character character2) {
@@ -106,5 +107,11 @@ public class Cell {
 	
 	public boolean isRevealed() {
 		return revealed;
+	}
+
+
+	public boolean isTaken() {
+		if(this.character!=null)return true;
+		return false;
 	}
 }
