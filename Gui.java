@@ -1,5 +1,6 @@
 package org.treasurehunt.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -56,8 +57,9 @@ public class Gui extends JFrame {
 
 				Graphics2D g = (Graphics2D) g1;
 				super.paint(g);
+				g.drawImage(sea, 10, 10, this);
 				g.setColor(Color.WHITE);
-
+				g.drawString("lololol", 100, 100);
 
 				for (int i = 0; i < bd.getSizeWidth() + 2; i++) {
 					for (int j = 0; j < bd.getSizeHeight() + 2; j++) {
@@ -82,16 +84,11 @@ public class Gui extends JFrame {
 								g.drawImage(rock, i * 40, j * 40, this);
 							}
 						}
-
 						// Display base
 						if (bd.getCell(j, i).isBase()) {
 							g.drawImage(base, i * 40, j * 40, this);
 						}
 
-						if (bd.getCell(j, i).isTaken() ) {
-							g.drawImage(soldat, i * 40, j * 40, this);
-						}
-						
 						// Display grid
 						if (i != 0) {
 							g.drawImage(lineV, i * 40, j * 40, this);
@@ -99,7 +96,7 @@ public class Gui extends JFrame {
 						if (j != 0) {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
-						
+						if (bd.getCell(j,i).hasCharacter()){g.drawImage(soldat, i * 40, j * 40, this);System.out.println("woooaaaa");}
 					}
 				}
 			}
@@ -111,7 +108,7 @@ public class Gui extends JFrame {
 			}
 		});
 
-		// f.setLayout(new BorderLayout(1,1));
+		//f.setLayout(new BorderLayout(1,1));
 		jeu.setSize(bd.getSizeHeight() * 40 + 285, bd.getSizeWidth() * 40 + 110);
 		jeu.setBackground(new Color(116, 208, 241));
 		f.add(jeu);
