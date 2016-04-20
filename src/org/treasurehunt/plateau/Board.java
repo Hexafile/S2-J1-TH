@@ -2,8 +2,6 @@ package org.treasurehunt.plateau;
 
 import java.util.Random;
 
-import org.treasurehunt.character.Personnage;
-
 //@author Thomas Plouchart
 /**
  * @author Samson
@@ -86,6 +84,7 @@ public class Board extends Cell {
 							|| j == sizeWidth + 1) { // If it's the border put
 														// sea
 						board[i][j].setObstacle(4);
+
 					} else {
 						board[i][j].setObstacle(0); // Else put herb
 					}
@@ -93,9 +92,9 @@ public class Board extends Cell {
 			}
 			Random rdm = new Random();
 
-			board[base1][0] = new Base(1); // Randomly set the position of team 1's
+			board[base1][0]= new Base(1); // Randomly set the position of team 1's
 										// boat
-			board[base2][sizeWidth + 1] = new Base(2); // Randomly set the position
+			board[base2][sizeWidth + 1]= new Base(2); // Randomly set the position
 													// of team 2's boat
 
 			int rocks = 0;
@@ -181,7 +180,9 @@ public class Board extends Cell {
 							tab[i - 1][j] = 1; // see upper
 							isBlocked = false;
 						}
-						if (!board[i + 1][j + 2].isObstacle() && tab[i][j + 1] == 0) { // if the right cell is herb
+						if (!board[i + 1][j + 2].isObstacle()
+								&& tab[i][j + 1] == 0) { // if the right cell is
+															// herb
 							tab[i][j + 1] = 1;// see upper
 							isBlocked = false;
 						}
@@ -306,12 +307,12 @@ public class Board extends Cell {
 	}
 
 	public Cell getCell(int x, int y) {
-		return board[y][x];
+		return board[x][y];
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {
 		if (getCell(xpos, ypos).isTaken()) {
-			setVisible(false, xpos, ypos, getCell(xpos,ypos).getCharacter().getTeam());
+			//this.setVisible(false);
 			getCell(xpos,ypos).getCharacter().setX(x);
 			getCell(xpos,ypos).getCharacter().setY(y);
 			
@@ -322,48 +323,46 @@ public class Board extends Cell {
 			getCell(x,y).setReachable(false);
 			getCell(xpos,ypos).setReachable(true);
 			
-			setVisible(false, x, y, getCell(xpos,ypos).getCharacter().getTeam());
+			//this.setVisible(true);
 		} else {
 			System.out.println("Not present");
 		}
 	}
 
-	public boolean[][] getMoves(Personnage character) {
+	/*public boolean[][] getMoves() {
 		boolean[][] moves = new boolean[3][3];
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				/*if (((i==0 && j==0) || (i==0 && j==2) || (i==2 && j==0) || (i==2 && j==2)) && character.type==Constant.EXPLORER) { //A modifier une fois constant fini
-					
-				}
-				else*/ if (getCell(character.getX() - 1 + i,character.getY() - 1 + j).getReachable())
+				if (getBoard()[x - 1 + i][y - 1 + j].getReachable())
 					moves[i][j] = true;
-				else
-					moves[i][j] = false;
-				
 			}
 		}
 		return moves;
-	}
+	}*/
 
-	public void setVisible(boolean refresh, int x, int y , int team) {
+	/*public void setVisible(boolean refresh) {
 		if (!refresh) {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
-					if (Math.sqrt((double) ((i - x)
-							* (i - x) + (j - y)
-							* (j - y))) < 3.0)
-						getCell(x,y).setVisible(getBoard()[y][x].getVisible()- team);
+					if (Math.sqrt((double) ((i - this.getX())
+							* (i - this.getX()) + (j - this.getY())
+							* (j - getY()))) < 3.0)
+						Board.getBoard()[y][x]
+								.setVisible(Board.getBoard()[y][x].getVisible()
+										- this.team);
 				}
 			}
 		} else {
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 5; j++) {
-					if (Math.sqrt((double) ((i - x) * (i - y) + (j - y)* (j - y))) < 3.0)
-						getCell(x,y).setVisible(team);
+					if (Math.sqrt((double) ((i - this.getX())
+							* (i - this.getX()) + (j - this.getY())
+							* (j - getY()))) < 3.0)
+						Board.getBoard()[y][x].setVisible(this.team);
 				}
 			}
 		}
-	}
+	}*/
 	
 	/*public boolean[][] getAct () {
 		boolean[][] act = new boolean[3][3];
