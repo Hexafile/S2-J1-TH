@@ -1,10 +1,13 @@
 package org.treasurehunt.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,16 +25,10 @@ public class Gui extends JFrame {
 	private JComponent menu;
 	private Board bd = new Board();;
 	private boolean start = true;
+	private int x_pos = -1, y_pos = -1;
 
-	public Image sea;
-	public Image sand;
-	public Image chest;
-	public Image key;
-	public Image rock;
-	public Image base;
-	public Image soldat;
-	public Image lineV;
-	public Image lineH;
+	public Image sea, sand, chest, key, rock, base, soldat, lineV, lineH,
+			fleche_haut, fleche_bas, fleche_gauche, fleche_droite, croix, reduire;
 
 	public Gui(Board b) {
 		if (start) {
@@ -39,6 +36,8 @@ public class Gui extends JFrame {
 
 			start = false;
 
+			croix = Toolkit.getDefaultToolkit().getImage("img/croix.png");
+			reduire = Toolkit.getDefaultToolkit().getImage("img/reduire.png");
 			sea = Toolkit.getDefaultToolkit().getImage("img/sea.jpg");
 			sand = Toolkit.getDefaultToolkit().getImage("img/sand.jpg");
 			chest = Toolkit.getDefaultToolkit().getImage("img/chest.png");
@@ -48,6 +47,15 @@ public class Gui extends JFrame {
 			lineV = Toolkit.getDefaultToolkit().getImage("img/line.png");
 			lineH = Toolkit.getDefaultToolkit().getImage("img/lineH.png");
 			soldat = Toolkit.getDefaultToolkit().getImage("img/soldat.png");
+			fleche_bas = Toolkit.getDefaultToolkit().getImage(
+					"img/fleche_bas.png");
+			fleche_haut = Toolkit.getDefaultToolkit().getImage(
+					"img/fleche_haut.png");
+			fleche_gauche = Toolkit.getDefaultToolkit().getImage(
+					"img/fleche_gauche.png");
+			fleche_droite = Toolkit.getDefaultToolkit().getImage(
+					"img/fleche_droite.png");
+
 		}
 
 		jeu = new JComponent() {
@@ -57,26 +65,27 @@ public class Gui extends JFrame {
 				Graphics2D g = (Graphics2D) g1;
 				super.paint(g);
 				g.setColor(Color.WHITE);
-
-
+				g.drawImage(croix, bd.getSizeHeight() * 40 + 256, 2, this);
+				g.drawImage(reduire, bd.getSizeHeight() * 40 + 225, 2, this);
+				
 				for (int i = 0; i < bd.getSizeWidth() + 2; i++) {
 					for (int j = 0; j < bd.getSizeHeight() + 2; j++) {
 
 						// Detect the Cell if is water else display sand
-						if (bd.getCell(j, i).getObstacle() == 4
-								|| bd.getCell(j, i).isBase()) {
+						if (bd.getCell(i, j).getObstacle() == 4
+								|| bd.getCell(i, j).isBase()) {
 							g.drawImage(sea, i * 40, j * 40, this);
 						} else {
 							g.drawImage(sand, i * 40, j * 40, this);
 						}
 
 						// display rock
-						if (!(bd.getCell(j, i).getObstacle() == 0 || bd
-								.getCell(j, i).getObstacle() == 4)) {
+						if (!(bd.getCell(i, j).getObstacle() == 0 || bd
+								.getCell(i, j).getObstacle() == 4)) {
 							if (bd.isRevealed()) {
-								if (bd.getCell(j, i).getObstacle() == 2)
+								if (bd.getCell(i, j).getObstacle() == 2)
 									g.drawImage(key, i * 40, j * 40, this);
-								if (bd.getCell(j, i).getObstacle() == 3)
+								if (bd.getCell(i, j).getObstacle() == 3)
 									g.drawImage(chest, i * 40, j * 40, this);
 							} else {
 								g.drawImage(rock, i * 40, j * 40, this);
@@ -84,14 +93,14 @@ public class Gui extends JFrame {
 						}
 
 						// Display base
-						if (bd.getCell(j, i).isBase()) {
+						if (bd.getCell(i, j).isBase()) {
 							g.drawImage(base, i * 40, j * 40, this);
 						}
 
-						if (bd.getCell(j, i).isTaken() ) {
+						if (bd.getCell(i, j).isTaken()) {
 							g.drawImage(soldat, i * 40, j * 40, this);
 						}
-						
+
 						// Display grid
 						if (i != 0) {
 							g.drawImage(lineV, i * 40, j * 40, this);
@@ -99,7 +108,19 @@ public class Gui extends JFrame {
 						if (j != 0) {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
-						
+
+						// Display action
+						if (i == getX_pos() && j == getY_pos()) {
+							g.drawImage(fleche_haut, i * 40, j * 40 - 40, this);
+							g.drawImage(fleche_gauche, i * 40 - 40, j * 40,
+									this);
+						}
+						if (i - 1 == getX_pos() && j == getY_pos()) {
+							g.drawImage(fleche_droite, i * 40, j * 40, this);
+						}
+						if (i == getX_pos() && j - 1 == getY_pos()) {
+							g.drawImage(fleche_bas, i * 40, j * 40, this);
+						}
 					}
 				}
 			}
@@ -111,16 +132,91 @@ public class Gui extends JFrame {
 			}
 		});
 
-		// f.setLayout(new BorderLayout(1,1));
-		jeu.setSize(bd.getSizeHeight() * 40 + 285, bd.getSizeWidth() * 40 + 110);
+		f.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getX()>=bd.getSizeHeight() * 40 + 256 && e.getY()<29){
+					 System.exit(DISPOSE_ON_CLOSE);
+				}else if(e.getX()>=bd.getSizeHeight() * 40 + 225 && e.getY()<29){
+					 f.setExtendedState(HIDE_ON_CLOSE);
+				}
+				
+				if (e.getX() / 40 < b.getSizeHeight()
+						&& e.getY() / 40 < b.getSizeWidth()) {
+					if (b.getCell(e.getX() / 40, e.getY() / 40).isTaken()) {
+						setX_pos(e.getX() / 40);
+						setY_pos(e.getY() / 40);
+					} else if(e.getX()/40 == getX_pos()-1 && e.getY()/40== getY_pos()){
+						b.move(getX_pos(), getY_pos(),getX_pos()-1 , getY_pos());
+						removeXY();
+						
+					}else{
+						removeXY();
+					}
+					jeu.repaint();
+				}
+			}
+		});
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double width = screenSize.getWidth();
+		double height = screenSize.getHeight();
+
+		jeu.setSize(bd.getSizeHeight() * 40 + 285, bd.getSizeWidth() * 40 + 80);
 		jeu.setBackground(new Color(116, 208, 241));
+		f.setUndecorated(true);
 		f.add(jeu);
 		f.setSize(jeu.getWidth(), jeu.getHeight());
 		f.setResizable(false);
-		f.setTitle("Treasure Hunt");
-		f.setLocation(200, 200);
+		f.setLocation((int) ((width - jeu.getWidth()) / 2),
+				(int) (height - jeu.getHeight()) / 2);
 		f.setVisible(true);
 
 	}
 
+	public int getX_pos() {
+		return x_pos;
+	}
+
+	public void setX_pos(int x_pos) {
+		this.x_pos = x_pos;
+	}
+
+	public int getY_pos() {
+		return y_pos;
+	}
+
+	public void setY_pos(int y_pos) {
+		this.y_pos = y_pos;
+	}
+
+	public void removeXY(){
+		setX_pos(-1);
+		setY_pos(-1);
+	}
 }
