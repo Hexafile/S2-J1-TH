@@ -84,7 +84,6 @@ public class Board extends Cell {
 							|| j == sizeWidth + 1) { // If it's the border put
 														// sea
 						board[i][j].setObstacle(4);
-						board[i][j].setBase(0);
 					} else {
 						board[i][j].setObstacle(0); // Else put herb
 					}
@@ -92,9 +91,9 @@ public class Board extends Cell {
 			}
 			Random rdm = new Random();
 
-			board[base1][0].setBase(1); // Randomly set the position of team 1's
+			board[base1][0] = new Base(1); // Randomly set the position of team 1's
 										// boat
-			board[base2][sizeWidth + 1].setBase(2); // Randomly set the position
+			board[base2][sizeWidth + 1] = new Base(2); // Randomly set the position
 													// of team 2's boat
 
 			int rocks = 0;
@@ -180,9 +179,7 @@ public class Board extends Cell {
 							tab[i - 1][j] = 1; // see upper
 							isBlocked = false;
 						}
-						if (!board[i + 1][j + 2].isObstacle()
-								&& tab[i][j + 1] == 0) { // if the right cell is
-															// herb
+						if (!board[i + 1][j + 2].isObstacle() && tab[i][j + 1] == 0) { // if the right cell is herb
 							tab[i][j + 1] = 1;// see upper
 							isBlocked = false;
 						}

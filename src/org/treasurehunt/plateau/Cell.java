@@ -15,13 +15,6 @@ public class Cell {
 	 * 4 for water
 	 */
 	private int obstacle = 0;
-
-	/**
-	 * 0 for not
-	 * 1 for team 1
-	 * 2 for team 2 ...
-	 */
-	private int base = 0;
 	
 	/**
 	 * 0 for no one
@@ -49,7 +42,7 @@ public class Cell {
 	}
 	
 	public boolean isBase(){
-		return !(this.base == 0);
+		return (this instanceof Base);
 	}
 	
 	public boolean isObstacle(){
@@ -93,14 +86,6 @@ public class Cell {
 	
 	public void deleteCharacter() {
 		character = new Explorer(0,0,0);
-	}
-	
-	public int getBase() {
-		return base;
-	}
-
-	public void setBase(int base) {
-		this.base = base;
 	}
 	
 	public boolean isRevealed() {
