@@ -1,6 +1,5 @@
 package org.treasurehunt.plateau;
 
-import org.treasurehunt.character.Explorer;
 import org.treasurehunt.character.Personnage;
 
 public class Cell {
@@ -28,7 +27,7 @@ public class Cell {
 	
 	private boolean reachable = true; 
 	
-	private Personnage character = new Explorer(0,0,0);
+	private Personnage character = new Personnage(0,0,0,0); //ghost character
 	
 	Cell(){}
 
@@ -85,7 +84,7 @@ public class Cell {
 	}
 	
 	public void deleteCharacter() {
-		character = new Explorer(0,0,0);
+		character = new Personnage(0,0,0,0);
 	}
 	
 	public boolean isRevealed() {

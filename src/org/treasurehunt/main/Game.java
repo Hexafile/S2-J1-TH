@@ -22,15 +22,15 @@ public class Game {
 		List<Integer> l = m.getCharacter();
 		m.dispose();
 		
-		b.getBoard()[2][2].setCharacter(new Explorer(1, 2, 2));
+		b.getBoard()[2][2].setCharacter(new Personnage(1, 2, 2,0));
 
 		
 		for(int i = 0; i<l.get(0);i++){
-			b.getBoard()[b.getBase(1)][0].setCharacter(new Explorer(0, 0, 0));
+			b.getBoard()[b.getBase(1)][0].setCharacter(new Personnage(0, 0, 0,0));
 		}
 		
 		for(int i = 0; i<l.get(0);i++){
-			b.getBoard()[b.getBase(2)][b.getSizeWidth()-1].setCharacter(new Explorer(0, 0, 0));
+			b.getBoard()[b.getBase(2)][b.getSizeWidth()-1].setCharacter(new Personnage(0, 0, 0,0));
 		}
 		System.out.println(b.toString());
 

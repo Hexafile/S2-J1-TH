@@ -1,26 +1,22 @@
 package org.treasurehunt.character;
 
-import org.treasurehunt.plateau.Board;
 
-public abstract class Personnage {
+public class Personnage {
 	private int team;
 	private boolean hasKey = false;
 	private int x;
 	private int y;
+	private int energy;
+	private int maxenergy;
 
-	public Personnage(int team, int x, int y) {
+	public Personnage(int team, int x, int y, int maxenergy) {
 		this.team = team;
 		this.x = x;
 		this.y = y;
+		this.energy = maxenergy;
+		this.maxenergy = maxenergy;
 	}
 
-	public boolean isHasKey() {
-		return hasKey;
-	}
-
-	public void setHasKey(boolean hasKey) {
-		this.hasKey = hasKey;
-	}
 
 	public void setTeam(int team) {
 		this.team = team;
@@ -53,8 +49,18 @@ public abstract class Personnage {
 	public int getY() {
 		return this.y;
 	}
+	public int getEnergy (){
+		return this.energy;
+	}
 
-	/**
-	 * @return the possibles movements for the character
-	 */
+	public int getmaxEnergy(){
+		return this.maxenergy;
+	}
+
+	public void Energy() {
+		if(getEnergy() > getmaxEnergy()){
+			energy = maxenergy;
+		}
+		System.out.println("Energie =" + energy + "/" + maxenergy);
+	}
 }
