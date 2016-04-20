@@ -6,11 +6,15 @@ public class Character {
 	private boolean hasKey = false;
 	private int x;
 	private int y; 
+	private int energy;
+	private int maxenergy;
 	
-Character (int team, int x, int y) {
+Character (int team, int x, int y, int e, int maxe) {
 	this.team=team;
 	this.x=x;
 	this.y=y;
+	this.e = energy;
+	this.maxe = maxenergy;
 }
 
 public int getTeam() {
@@ -73,6 +77,21 @@ public void setVisible(boolean clean) {
 			}
 		}
 	}
+}
+
+public int getEnergy (){
+	return this.energy;
+}
+
+public int getmaxEnergy(){
+	return this.maxenergy;
+}
+
+public void Energy() {
+	if(getEnergy > getmaxEnergy){
+		energy = maxenergy;
+	}
+	System.out.println("Energie =" energy "/" maxenergy);
 }
 }
 
