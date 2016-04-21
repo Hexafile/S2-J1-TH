@@ -16,6 +16,10 @@ public class Base extends Cell{
 		return this.team;
 	}
 	
+	public boolean isObstacle() {
+		return false; 
+	}
+	
 	public void addCharacter (Personnage character) {
 		this.character.add(character);
 	}

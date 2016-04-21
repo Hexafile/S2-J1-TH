@@ -97,9 +97,9 @@ public class Gui extends JFrame {
 							g.drawImage(base, i * 40, j * 40, this);
 						}
 
-						if (bd.getCell(i, j).isTaken()) {
+						/*if (bd.getCell(i, j).isTaken()) {
 							g.drawImage(soldat, i * 40, j * 40, this);
-						}
+						}*/
 
 						// Display grid
 						if (i != 0) {
@@ -166,13 +166,13 @@ public class Gui extends JFrame {
 					 f.setExtendedState(HIDE_ON_CLOSE);
 				}
 				
-				if (e.getX() / 40 < b.getSizeHeight()
-						&& e.getY() / 40 < b.getSizeWidth()) {
-					if (b.getCell(e.getX() / 40, e.getY() / 40).isTaken()) {
+				if (e.getX() / 40 < bd.getSizeHeight()
+						&& e.getY() / 40 < bd.getSizeWidth()) {
+					if (bd.getCell(e.getX() / 40, e.getY() / 40).isCharacter()) {
 						setX_pos(e.getX() / 40);
 						setY_pos(e.getY() / 40);
 					} else if(e.getX()/40 == getX_pos()-1 && e.getY()/40== getY_pos()){
-						b.move(getX_pos(), getY_pos(),getX_pos()-1 , getY_pos());
+						bd.move(getX_pos(), getY_pos(),getX_pos()-1 , getY_pos());
 						removeXY();
 						
 					}else{

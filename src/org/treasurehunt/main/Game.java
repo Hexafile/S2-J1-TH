@@ -2,12 +2,10 @@ package org.treasurehunt.main;
 
 import java.util.List;
 
+import org.treasurehunt.character.Personnage;
 import org.treasurehunt.gui.Gui;
 import org.treasurehunt.gui.Menu;
 import org.treasurehunt.plateau.Board;
-import org.treasurehunt.plateau.Cell;
-import org.treasurehunt.character.*;
-import org.treasurehunt.character.Personnage;
 
 public class Game {
 	public static void main(String[] args) {

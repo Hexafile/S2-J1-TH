@@ -84,7 +84,7 @@ public class Board extends Cell {
 							|| j == sizeWidth + 1) { // If it's the border put
 														// sea
 						board[i][j].setObstacle(4);
-						board[i][j].setBase();
+						// board[i][j].setBase(0);
 					} else {
 						board[i][j].setObstacle(0); // Else put herb
 					}
@@ -92,24 +92,28 @@ public class Board extends Cell {
 			}
 			Random rdm = new Random();
 
-			board[base1][0].setBase(1); // Randomly set the position of team 1's
-										// boat
-			board[base2][sizeWidth + 1].setBase(2); // Randomly set the position
-													// of team 2's boat
+			board[base1][0] = new Base(1); // Randomly set the position of team
+											// 1's
+			// boat
+			board[base2][sizeWidth + 1] = new Base(2); // Randomly set the
+														// position
+			// of team 2's boat
 
 			int rocks = 0;
 			while (rocks < rocksNb) {
 				int x = rdm.nextInt(sizeWidth) + 1;
 				int y = rdm.nextInt(sizeHeight) + 1;
 				if (board[x][y].getObstacle() != 3
-						&& !(board[x][y - 1].isBase() && !(board[x][y + 1]
-								.isBase()))) { // If it's not already a rock and
-												// it doesn't block a boat
+						&& !(board[x][y - 1].isBase())
+						&& !(board[x][y + 1].isBase())) { // If it's not already
+															// a rock and
+															// it doesn't block
+															// a boat
 					board[x][y].setObstacle(1);
 					rocks++;
 				}
 			}
-			// System.out.println("debug");
+			System.out.println(this.toString());
 		} while (!genDone(board, rocksNb)); // while at least one rock is
 											// unreachable
 
@@ -161,7 +165,8 @@ public class Board extends Cell {
 										// the indice 2
 						isBlocked = false;
 					}
-					if (tab[i][j] == 1) {
+					if (tab[i][j] == 1 && !board[i + 1][j + 1].isBase()) {
+						System.out.println("" + i + " " + j);
 						if (!board[i + 2][j + 1].isObstacle()
 								&& tab[i + 1][j] == 0) { // if the upper cell is
 															// herb
@@ -180,18 +185,20 @@ public class Board extends Cell {
 							tab[i - 1][j] = 1; // see upper
 							isBlocked = false;
 						}
-						if (!board[i + 1][j + 2].isObstacle()
+						if (j != sizeWidth - 1
+								&& !board[i + 1][j + 2].isObstacle()
 								&& tab[i][j + 1] == 0) { // if the right cell is
 															// herb
 							tab[i][j + 1] = 1;// see upper
 							isBlocked = false;
 						}
-						if (!board[i + 1][j].isObstacle() && tab[i][j - 1] == 0) { // if
-																					// the
-																					// right
-																					// cell
-																					// is
-																					// herb
+						if (j != 0 && !board[i + 1][j].isObstacle()
+								&& tab[i][j - 1] == 0) { // if
+							// the
+							// left
+							// cell
+							// is
+							// herb
 							tab[i][j - 1] = 1; // see upper
 							isBlocked = false;
 						}
@@ -256,17 +263,13 @@ public class Board extends Cell {
 			for (int j = 0; j < board[0].length; j++) {
 				ret += "|";
 				if (board[i][j].isBase()) {
-					if (board[i][j].isTaken()) {
-						ret += " P ";
-					} else {
-						ret += " B ";
-					}
+					ret += " B ";
+
 				} else {
 					if (board[i][j].isObstacle()) {
-						// don't touch
 						if (board[i][j].getObstacle() == 2) {
 							ret += " K ";
-							// don't touch
+
 						} else if (board[i][j].getObstacle() == 3) {
 							ret += " C ";
 						} else if (board[i][j].getObstacle() == 4) {
@@ -274,7 +277,7 @@ public class Board extends Cell {
 						} else {
 							ret += " R ";
 						}
-					} else if (board[i][j].isTaken()) {
+					} else if (board[i][j].isCharacter()) {
 						ret += " P ";
 					} else {
 						ret += "   ";
@@ -311,66 +314,48 @@ public class Board extends Cell {
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {
-		if (getCell(xpos, ypos).isTaken()) {
-			//this.setVisible(false);
-			getCell(xpos,ypos).getCharacter().setX(x);
-			getCell(xpos,ypos).getCharacter().setY(y);
-			
-			org.treasurehunt.character.Personnage c = getCell(xpos,ypos).getCharacter();
-			getCell(xpos,ypos).deleteCharacter();
-			getCell(x,y).setCharacter(c);
-			
-			getCell(x,y).setReachable(false);
-			getCell(xpos,ypos).setReachable(true);
-			
-			//this.setVisible(true);
+		if (getCell(xpos, ypos).isCharacter()) {
+			// this.setVisible(false);
+			getCell(xpos, ypos).getCharacter().setX(x);
+			getCell(xpos, ypos).getCharacter().setY(y);
+
+			org.treasurehunt.character.Personnage c = getCell(xpos, ypos)
+					.getCharacter();
+			getCell(xpos, ypos).removeCharacter();
+			getCell(x, y).setCharacter(c);
+
+			getCell(x, y).setReachable(false);
+			getCell(xpos, ypos).setReachable(true);
+
+			// this.setVisible(true);
 		} else {
 			System.out.println("Not present");
 		}
 	}
 
-	/*public boolean[][] getMoves() {
-		boolean[][] moves = new boolean[3][3];
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (getBoard()[x - 1 + i][y - 1 + j].getReachable())
-					moves[i][j] = true;
-			}
-		}
-		return moves;
-	}*/
+	/*
+	 * public boolean[][] getMoves() { boolean[][] moves = new boolean[3][3];
+	 * for (int i = 0; i < 3; i++) { for (int j = 0; j < 3; j++) { if
+	 * (getBoard()[x - 1 + i][y - 1 + j].getReachable()) moves[i][j] = true; } }
+	 * return moves; }
+	 */
 
-	/*public void setVisible(boolean refresh) {
-		if (!refresh) {
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 5; j++) {
-					if (Math.sqrt((double) ((i - this.getX())
-							* (i - this.getX()) + (j - this.getY())
-							* (j - getY()))) < 3.0)
-						Board.getBoard()[y][x]
-								.setVisible(Board.getBoard()[y][x].getVisible()
-										- this.team);
-				}
-			}
-		} else {
-			for (int i = 0; i < 5; i++) {
-				for (int j = 0; j < 5; j++) {
-					if (Math.sqrt((double) ((i - this.getX())
-							* (i - this.getX()) + (j - this.getY())
-							* (j - getY()))) < 3.0)
-						Board.getBoard()[y][x].setVisible(this.team);
-				}
-			}
-		}
-	}*/
-	
-	/*public boolean[][] getAct () {
-		boolean[][] act = new boolean[3][3];
-		for (int i=0; i<3; i++ ) {
-			for (int j=0; j<3; j++) {
-				if (getBoard()[x-1+i][y-1+j].getObstacle()>0 && Board.getBoard()[x-1+i][y-1+j].getObstacle() <4) act[i][j]=true;
-			}
-		}
-		return act;
-	}*/
+	/*
+	 * public void setVisible(boolean refresh) { if (!refresh) { for (int i = 0;
+	 * i < 5; i++) { for (int j = 0; j < 5; j++) { if (Math.sqrt((double) ((i -
+	 * this.getX()) (i - this.getX()) + (j - this.getY()) (j - getY()))) < 3.0)
+	 * Board.getBoard()[y][x] .setVisible(Board.getBoard()[y][x].getVisible() -
+	 * this.team); } } } else { for (int i = 0; i < 5; i++) { for (int j = 0; j
+	 * < 5; j++) { if (Math.sqrt((double) ((i - this.getX()) (i - this.getX()) +
+	 * (j - this.getY()) (j - getY()))) < 3.0)
+	 * Board.getBoard()[y][x].setVisible(this.team); } } } }
+	 */
+
+	/*
+	 * public boolean[][] getAct () { boolean[][] act = new boolean[3][3]; for
+	 * (int i=0; i<3; i++ ) { for (int j=0; j<3; j++) { if
+	 * (getBoard()[x-1+i][y-1+j].getObstacle()>0 &&
+	 * Board.getBoard()[x-1+i][y-1+j].getObstacle() <4) act[i][j]=true; } }
+	 * return act; }
+	 */
 }
