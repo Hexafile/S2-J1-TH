@@ -15,11 +15,11 @@ public class Cell {
 	 * 0 for not 1 for team 1 2 for team 2 ...
 	 */
 	private int base = 0;
-	
-	private int visible= 0;
+
+	private int visible = 0;
 
 	private boolean revealed = false;
-	
+
 	private boolean reachable = true;
 
 	private Personnage character = new Personnage(0, 0, 0, 0);
@@ -62,8 +62,8 @@ public class Cell {
 	public boolean isRevealed() {
 		return revealed;
 	}
-	
-	public void setRevealed(boolean r){
+
+	public void setRevealed(boolean r) {
 		this.revealed = r;
 	}
 
@@ -73,25 +73,31 @@ public class Cell {
 	}
 
 	public void removeCharacter() {
-		if (character.getTeam() == 0)
-			character = new Personnage(0, 0, 0, 0);
+		character = new Personnage(0, 0, 0, 0);
 	}
-	
-	public Personnage getCharacter(){
+
+	public Personnage getCharacter() {
 		return this.character;
 	}
 
 	public boolean isCharacter() {
 		return character.getTeam() != 0;
 	}
-	
-	public boolean getReachable(){
+
+	public boolean getReachable() {
 		return this.reachable;
 	}
-	
-	public void setReachable(boolean b){
+
+	public void setReachable(boolean b) {
 		this.reachable = b;
 	}
-	
+
+	public int getVisible() {
+		return visible;
+	}
+
+	public void setVisible(int visible) {
+		this.visible = visible;
+	}
 
 }

@@ -2,6 +2,8 @@ package org.treasurehunt.plateau;
 
 import java.util.Random;
 
+import org.treasurehunt.character.Personnage;
+
 //@author Thomas Plouchart
 /**
  * @author Samson
@@ -310,7 +312,7 @@ public class Board extends Cell {
 	}
 
 	public Cell getCell(int x, int y) {
-		return board[x][y];
+		return board[y][x];
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {
@@ -319,8 +321,7 @@ public class Board extends Cell {
 			getCell(xpos, ypos).getCharacter().setX(x);
 			getCell(xpos, ypos).getCharacter().setY(y);
 
-			org.treasurehunt.character.Personnage c = getCell(xpos, ypos)
-					.getCharacter();
+			Personnage c = getCell(xpos, ypos).getCharacter();
 			getCell(xpos, ypos).removeCharacter();
 			getCell(x, y).setCharacter(c);
 
@@ -333,29 +334,51 @@ public class Board extends Cell {
 		}
 	}
 
-	/*
-	 * public boolean[][] getMoves() { boolean[][] moves = new boolean[3][3];
-	 * for (int i = 0; i < 3; i++) { for (int j = 0; j < 3; j++) { if
-	 * (getBoard()[x - 1 + i][y - 1 + j].getReachable()) moves[i][j] = true; } }
-	 * return moves; }
-	 */
+	public boolean[][] getMoves(Personnage character) {
+		boolean[][] moves = new boolean[3][3];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (getCell(character.getX() - 1 + i, character.getY() - 1 + j)
+						.getReachable())
+					moves[i][j] = true;
+				else
+					moves[i][j] = false;
+			}
+		}
+		return moves;
+	}
 
-	/*
-	 * public void setVisible(boolean refresh) { if (!refresh) { for (int i = 0;
-	 * i < 5; i++) { for (int j = 0; j < 5; j++) { if (Math.sqrt((double) ((i -
-	 * this.getX()) (i - this.getX()) + (j - this.getY()) (j - getY()))) < 3.0)
-	 * Board.getBoard()[y][x] .setVisible(Board.getBoard()[y][x].getVisible() -
-	 * this.team); } } } else { for (int i = 0; i < 5; i++) { for (int j = 0; j
-	 * < 5; j++) { if (Math.sqrt((double) ((i - this.getX()) (i - this.getX()) +
-	 * (j - this.getY()) (j - getY()))) < 3.0)
-	 * Board.getBoard()[y][x].setVisible(this.team); } } } }
-	 */
+	public void setVisible(boolean refresh, int x, int y, int team) {
+		if (!refresh) {
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (Math.sqrt((double) ((i - x)
 
-	/*
-	 * public boolean[][] getAct () { boolean[][] act = new boolean[3][3]; for
-	 * (int i=0; i<3; i++ ) { for (int j=0; j<3; j++) { if
-	 * (getBoard()[x-1+i][y-1+j].getObstacle()>0 &&
-	 * Board.getBoard()[x-1+i][y-1+j].getObstacle() <4) act[i][j]=true; } }
-	 * return act; }
-	 */
+					* (i - x) + (j - y) * (j - y))) < 3.0)
+						getCell(x, y).setVisible(
+								getBoard()[y][x].getVisible() - team);
+				}
+			}
+		} else {
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 5; j++) {
+					if (Math.sqrt((double) ((i - x) * (i - y) + (j - y)
+							* (j - y))) < 3.0)
+						getCell(x, y).setVisible(team);
+				}
+			}
+		}
+	}
+
+	/*public boolean[][] getAct() {
+		boolean[][] act = new boolean[3][3];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (getBoard()[x - 1 + i][y - 1 + j].getObstacle() > 0
+						&& Board.getBoard()[x - 1 + i][y - 1 + j].getObstacle() < 4)
+					act[i][j] = true;
+			}
+		}
+		return act;
+	}*/
 }

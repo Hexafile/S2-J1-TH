@@ -97,9 +97,9 @@ public class Gui extends JFrame {
 							g.drawImage(base, i * 40, j * 40, this);
 						}
 
-						/*if (bd.getCell(i, j).isTaken()) {
+						if (bd.getCell(i, j).isCharacter()) {
 							g.drawImage(soldat, i * 40, j * 40, this);
-						}*/
+						}
 
 						// Display grid
 						if (i != 0) {
