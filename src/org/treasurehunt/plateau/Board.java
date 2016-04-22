@@ -340,11 +340,16 @@ public class Board extends Cell {
 		boolean[][] moves = new boolean[3][3];
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				if (getCell(character.getX() - 1 + i, character.getY() - 1 + j)
-						.getReachable())
-					moves[i][j] = true;
-				else
-					moves[i][j] = false;
+				if (!(character.getX() == 0 && i == 0)
+						&& !(character.getY() == 0 && j == 0)
+						&& !(character.getY() == getSizeHeight() && j == 2)
+						&& !(character.getX() == getSizeWidth() && i == 2)) {
+					if (getCell(character.getX() - 1 + i,
+							character.getY() - 1 + j).getReachable())
+						moves[i][j] = true;
+					else
+						moves[i][j] = false;
+				}
 			}
 		}
 		return moves;
@@ -372,15 +377,10 @@ public class Board extends Cell {
 		}
 	}
 
-	/*public boolean[][] getAct() {
-		boolean[][] act = new boolean[3][3];
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (getBoard()[x - 1 + i][y - 1 + j].getObstacle() > 0
-						&& Board.getBoard()[x - 1 + i][y - 1 + j].getObstacle() < 4)
-					act[i][j] = true;
-			}
-		}
-		return act;
-	}*/
+	/*
+	 * public boolean[][] getAct() { boolean[][] act = new boolean[3][3]; for
+	 * (int i = 0; i < 3; i++) { for (int j = 0; j < 3; j++) { if (getBoard()[x
+	 * - 1 + i][y - 1 + j].getObstacle() > 0 && Board.getBoard()[x - 1 + i][y -
+	 * 1 + j].getObstacle() < 4) act[i][j] = true; } } return act; }
+	 */
 }

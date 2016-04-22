@@ -130,13 +130,13 @@ public class Gui extends JFrame {
 								g.drawImage(fleche_gauche, (i - 1) * 40 - 40,
 										(j - 1) * 40, this);
 							if (moves[1][2])
-								g.drawImage(fleche_droite, (i - 1) * 40,
+								g.drawImage(fleche_droite, (i - 1) * 40 + 40,
 										(j - 1) * 40, this);
 							if (moves[2][0])
 								;
 							if (moves[2][1])
 								g.drawImage(fleche_bas, (i - 1) * 40,
-										(j - 1) * 40, this);
+										(j - 1) * 40 +40, this);
 							if (moves[2][2])
 								;
 						}
