@@ -28,7 +28,8 @@ public class Gui extends JFrame {
 	private int x_pos = -1, y_pos = -1;
 
 	public Image sea, sand, chest, key, rock, base, soldat, lineV, lineH,
-			fleche_haut, fleche_bas, fleche_gauche, fleche_droite, croix, reduire;
+			fleche_haut, fleche_bas, fleche_gauche, fleche_droite, croix,
+			reduire;
 
 	public Gui(Board b) {
 		if (start) {
@@ -67,7 +68,7 @@ public class Gui extends JFrame {
 				g.setColor(Color.WHITE);
 				g.drawImage(croix, bd.getSizeHeight() * 40 + 256, 2, this);
 				g.drawImage(reduire, bd.getSizeHeight() * 40 + 225, 2, this);
-				
+
 				for (int i = 0; i < bd.getSizeWidth() + 2; i++) {
 					for (int j = 0; j < bd.getSizeHeight() + 2; j++) {
 
@@ -109,17 +110,35 @@ public class Gui extends JFrame {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
 
+						boolean[][] moves = null;
+						if (i != 0 && j != 0
+								&& bd.getCell(i - 1, j - 1).isCharacter())
+							moves = bd.getMoves(bd.getCell(i - 1, j - 1)
+									.getCharacter());
+
 						// Display action
-						if (i == getX_pos() && j == getY_pos()) {
-							g.drawImage(fleche_haut, i * 40, j * 40 - 40, this);
-							g.drawImage(fleche_gauche, i * 40 - 40, j * 40,
-									this);
-						}
-						if (i - 1 == getX_pos() && j == getY_pos()) {
-							g.drawImage(fleche_droite, i * 40, j * 40, this);
-						}
-						if (i == getX_pos() && j - 1 == getY_pos()) {
-							g.drawImage(fleche_bas, i * 40, j * 40, this);
+
+						if (moves != null ) {
+							if (moves[0][0])
+								;
+							if (moves[0][1])
+								g.drawImage(fleche_haut, (i - 1) * 40,
+										(j - 1) * 40 - 40, this);
+							if (moves[0][2])
+								;
+							if (moves[1][0])
+								g.drawImage(fleche_gauche, (i - 1) * 40 - 40,
+										(j - 1) * 40, this);
+							if (moves[1][2])
+								g.drawImage(fleche_droite, (i - 1) * 40,
+										(j - 1) * 40, this);
+							if (moves[2][0])
+								;
+							if (moves[2][1])
+								g.drawImage(fleche_bas, (i - 1) * 40,
+										(j - 1) * 40, this);
+							if (moves[2][2])
+								;
 						}
 					}
 				}
@@ -160,22 +179,25 @@ public class Gui extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getX()>=bd.getSizeHeight() * 40 + 256 && e.getY()<29){
-					 System.exit(DISPOSE_ON_CLOSE);
-				}else if(e.getX()>=bd.getSizeHeight() * 40 + 225 && e.getY()<29){
-					 f.setExtendedState(HIDE_ON_CLOSE);
+				if (e.getX() >= bd.getSizeHeight() * 40 + 256 && e.getY() < 29) {
+					System.exit(DISPOSE_ON_CLOSE);
+				} else if (e.getX() >= bd.getSizeHeight() * 40 + 225
+						&& e.getY() < 29) {
+					f.setExtendedState(HIDE_ON_CLOSE);
 				}
-				
+
 				if (e.getX() / 40 < bd.getSizeHeight()
 						&& e.getY() / 40 < bd.getSizeWidth()) {
 					if (bd.getCell(e.getX() / 40, e.getY() / 40).isCharacter()) {
 						setX_pos(e.getX() / 40);
 						setY_pos(e.getY() / 40);
-					} else if(e.getX()/40 == getX_pos()-1 && e.getY()/40== getY_pos()){
-						bd.move(getX_pos(), getY_pos(),getX_pos()-1 , getY_pos());
+					} else if (e.getX() / 40 == getX_pos() - 1
+							&& e.getY() / 40 == getY_pos()) {
+						bd.move(getX_pos(), getY_pos(), getX_pos() - 1,
+								getY_pos());
 						removeXY();
-						
-					}else{
+
+					} else {
 						removeXY();
 					}
 					jeu.repaint();
@@ -215,7 +237,7 @@ public class Gui extends JFrame {
 		this.y_pos = y_pos;
 	}
 
-	public void removeXY(){
+	public void removeXY() {
 		setX_pos(-1);
 		setY_pos(-1);
 	}

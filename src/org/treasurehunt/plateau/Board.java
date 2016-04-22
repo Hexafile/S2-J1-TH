@@ -86,6 +86,7 @@ public class Board extends Cell {
 							|| j == sizeWidth + 1) { // If it's the border put
 														// sea
 						board[i][j].setObstacle(4);
+						board[i][j].setReachable(false);
 						// board[i][j].setBase(0);
 					} else {
 						board[i][j].setObstacle(0); // Else put herb
@@ -112,6 +113,7 @@ public class Board extends Cell {
 															// it doesn't block
 															// a boat
 					board[x][y].setObstacle(1);
+					board[x][y].setReachable(false);
 					rocks++;
 				}
 			}
