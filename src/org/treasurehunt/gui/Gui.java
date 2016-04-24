@@ -25,7 +25,7 @@ public class Gui extends JFrame {
 	private JComponent menu;
 	private Board bd = new Board();;
 	private boolean start = true;
-	private int x_pos = -2, y_pos = -2;
+	private int x_pos = -2, y_pos = -2, cptTour, act;
 	private boolean[][] moves = null;
 
 	public Image sea, sand, chest, key, rock, base, soldat, lineV, lineH,
@@ -188,7 +188,9 @@ public class Gui extends JFrame {
 				if (e.getX() / 40 < bd.getSizeHeight()
 						&& e.getY() / 40 < bd.getSizeWidth()) {
 					// Si Personnage
-					if (bd.getCell(e.getX() / 40, e.getY() / 40).isCharacter()) {
+					if (bd.getCell(e.getX() / 40, e.getY() / 40).isCharacter()
+							&& bd.getCell(e.getX() / 40, e.getY() / 40)
+									.getCharacter().getTeam() == getTourTeam()) {
 						setX_pos(e.getX() / 40);
 						setY_pos(e.getY() / 40);
 						// Vers droite
@@ -197,24 +199,28 @@ public class Gui extends JFrame {
 						bd.move(getX_pos(), getY_pos(), getX_pos() - 1,
 								getY_pos());
 						removeXY();
+						increaseAct();
 						// Vers gauche
 					} else if (e.getX() / 40 == getX_pos() + 1
 							&& e.getY() / 40 == getY_pos() && moves[1][2]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos() + 1,
 								getY_pos());
 						removeXY();
+						increaseAct();
 						// Vers haut
 					} else if (e.getX() / 40 == getX_pos()
 							&& e.getY() / 40 == getY_pos() - 1 && moves[0][1]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos(),
 								getY_pos() - 1);
 						removeXY();
+						increaseAct();
 						// Vers bas
 					} else if (e.getX() / 40 == getX_pos()
 							&& e.getY() / 40 == getY_pos() + 1 && moves[2][1]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos(),
 								getY_pos() + 1);
 						removeXY();
+						increaseAct();
 						// Sinon remove les coord du Personnage en cache
 					} else {
 						removeXY();
@@ -259,5 +265,17 @@ public class Gui extends JFrame {
 	public void removeXY() {
 		setX_pos(-2);
 		setY_pos(-2);
+	}
+
+	public int getTourTeam() {
+		return cptTour % 2 + 1;
+	}
+
+	public void increaseAct() {
+		if (act > 2) {
+			cptTour++;
+			act = 0;
+		}
+		act++;
 	}
 }
