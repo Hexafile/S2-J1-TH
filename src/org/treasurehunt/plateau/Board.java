@@ -360,11 +360,14 @@ public class Board extends Cell {
 						&& !(character.getY() == 0 && j == 0)
 						&& !(character.getY() == getSizeHeight() && j == 2)
 						&& !(character.getX() == getSizeWidth() && i == 2)) {
+					if (character.getType()==Constant.EXPLORER)
 					if (getCell(character.getX() - 1 + i,
 							character.getY() - 1 + j).getReachable())
 						moves[i][j] = true;
 					else
 						moves[i][j] = false;
+					if (character.getType()==Constant.EXPLORER)
+						moves[i][j]=false;
 				}
 			}
 		}

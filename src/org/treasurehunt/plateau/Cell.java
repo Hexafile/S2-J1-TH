@@ -22,7 +22,7 @@ public class Cell {
 
 	private boolean reachable = true;
 
-	private Personnage character = new Personnage(0, 0, 0, 0);
+	private Personnage character = new Personnage(0, 0, 0, 0,0);
 
 	Cell() {
 	}

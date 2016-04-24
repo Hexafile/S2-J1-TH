@@ -8,18 +8,28 @@ public class Personnage {
 	private int y;
 	private int energy;
 	private int maxenergy;
+	private int type;
 
-	public Personnage(int team, int x, int y, int maxenergy) {
+	public Personnage(int team, int x, int y, int maxenergy, int type) {
 		this.team = team;
 		this.x = x;
 		this.y = y;
 		this.energy = maxenergy;
 		this.maxenergy = maxenergy;
+		this.type=type;
 	}
 
 
 	public void setTeam(int team) {
 		this.team = team;
+	}
+	
+	public void setType(int type) {
+		this.type=type;
+	}
+	
+	public int getType() {
+		return this.type;
 	}
 
 	public void setX(int x) {
