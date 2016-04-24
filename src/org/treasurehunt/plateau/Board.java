@@ -79,7 +79,7 @@ public class Board extends Cell {
 				board[i][j] = new Cell();
 			}
 		}
-		do {
+		//do {
 			for (int i=0; i < sizeHeight +2; i++) {
 				for (int j=0; j < sizeWidth +2; j++) {
 					board[i][j].setReachable(true);
@@ -123,7 +123,7 @@ public class Board extends Cell {
 				}
 			}
 			System.out.println(this.toString());
-		} while (!genDone(board, rocksNb)); // while at least one rock is
+		//} while (!genDone(board, rocksNb)); // while at least one rock is
 											// unreachable
 
 		Random random = new Random();
@@ -150,48 +150,52 @@ public class Board extends Cell {
 		}
 	}
 
-	private boolean genDone(Cell[][] board, int rocksNb) {
+	/*private boolean genDone(Cell[][] board, int rocksNb) {
 		int[][] tab = new int[sizeHeight][sizeWidth];
-		boolean bateau1 = false;
-		boolean bateau2 = false;
 		tab[0][0] = 1; // This is a virtual player who check if all the rocks
 						// are reachable
+		int cpt2=0;
 		boolean isBlocked = true;
+		while (cpt2<2){
 		while (isBlocked) { // While the player has moved, we try to keep on
 			isBlocked = true;
 			for (int i = 0; i < sizeHeight; i++) {
 				for (int j = 0; j < sizeWidth; j++) {
-					if (board[i + 1][j + 1].getObstacle() == 1) {
+					if (board[i + 1][j + 1].getObstacle() == 1 && tab[i][j]==0) {
 						if (board[i + 2][j + 1].isObstacle()
 								&& board[i][j + 1].isObstacle()
 								&& board[i + 1][j + 2].isObstacle()
 								&& board[i + 1][j].isObstacle()) {
-							// System.out.println("debug2");
+							 System.out.println("debug2");
 							return false; // If it's a rock and unreachable, we
 											// generate the map again
 						}
 						tab[i][j] = 2; // if the rock is not blocked, we give it
 										// the indice 2
 						isBlocked = false;
+						System.out.println(""+i+" "+j);
+						System.out.println("Rocher");
 					}
 					if (tab[i][j] == 1 && !board[i + 1][j + 1].isBase()) {
 						System.out.println("" + i + " " + j);
 						if (!board[i + 2][j + 1].isObstacle()
-								&& tab[i + 1][j] == 0) { // if the upper cell is
+								&& tab[i + 1][j] == 0) { // if the bottom cell is
 															// herb
 							tab[i + 1][j] = 1; // The player could go to this
 												// cell so we give it the indice
 												// 1
 							isBlocked = false; // We're not blocked because the
 												// player could go here.
+							System.out.println("bas");
 						}
 						if (!board[i][j + 1].isObstacle() && tab[i - 1][j] == 0) { // if
 																					// the
-																					// bottom
+																					// up
 																					// cell
 																					// is
 																					// herb
 							tab[i - 1][j] = 1; // see upper
+							System.out.println("haut");
 							isBlocked = false;
 						}
 						if (j != sizeWidth - 1
@@ -199,6 +203,7 @@ public class Board extends Cell {
 								&& tab[i][j + 1] == 0) { // if the right cell is
 															// herb
 							tab[i][j + 1] = 1;// see upper
+							System.out.println("droit");
 							isBlocked = false;
 						}
 						if (j != 0 && !board[i + 1][j].isObstacle()
@@ -209,9 +214,10 @@ public class Board extends Cell {
 							// is
 							// herb
 							tab[i][j - 1] = 1; // see upper
+							System.out.println("gauche");
 							isBlocked = false;
 						}
-						if (!board[i + 1][j + 2].isBase()) {
+						/*if (!board[i + 1][j + 2].isBase()) {
 							bateau1 = true;
 						}
 						if (board[i + 1][j].isBase()) {
@@ -220,6 +226,10 @@ public class Board extends Cell {
 					}
 				}
 			}
+			
+		}
+		cpt2++;
+		System.out.println(""+cpt2);
 		}
 		int cpt = 0;
 		for (int k = 0; k < sizeHeight; k++) {
@@ -248,14 +258,15 @@ public class Board extends Cell {
 						neighbour += tab[k][l + 1];
 					}
 					if (neighbour < 4 || neighbour >= 8) {
+						System.out.println("FUUUUUUCK");
 						return false;
 					}
 					cpt++; // If we find a 0 that means we cannot reach it
 				}
 			}
 		}
-		return cpt == rocksNb && bateau1 && bateau2;
-	}
+		return cpt == rocksNb;
+	}*/
 
 	/**
 	 * To string.
@@ -319,7 +330,7 @@ public class Board extends Cell {
 	}
 
 	public Cell getCell(int x, int y) {
-		return board[x][y];
+		return board[y][x];
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {
