@@ -12,10 +12,10 @@ import org.treasurehunt.character.Personnage;
 public class Board extends Cell {
 
 	/** the size of the board in height. */
-	private int sizeHeight = 10;
+	private int sizeHeight = 20;
 
 	/** the size of the board in width. */
-	private int sizeWidth = 10;
+	private int sizeWidth = 20;
 
 	/** percentage of rocks on the board */
 	private int percentage = 15;
@@ -79,7 +79,7 @@ public class Board extends Cell {
 				board[i][j] = new Cell();
 			}
 		}
-		do {
+		//do {
 			for (int i=0; i < sizeHeight +2; i++) {
 				for (int j=0; j < sizeWidth +2; j++) {
 					board[i][j].setReachable(true);
@@ -123,7 +123,7 @@ public class Board extends Cell {
 				}
 			}
 			System.out.println(this.toString());
-		} while (!genDone(board, rocksNb)); // while at least one rock is
+		//} while (!genDone(board, rocksNb)); // while at least one rock is
 											// unreachable
 
 		Random random = new Random();
@@ -150,13 +150,14 @@ public class Board extends Cell {
 		}
 	}
 
-	private boolean genDone(Cell[][] board, int rocksNb) {
+	/*private boolean genDone(Cell[][] board, int rocksNb) {
 		int[][] tab = new int[sizeHeight][sizeWidth];
 		tab[0][0] = 1; // This is a virtual player who check if all the rocks
 						// are reachable
 		int cpt2=0;
 		boolean isBlocked = true;
-		while (isBlocked && cpt2<3) { // While the player has moved, we try to keep on
+		while (cpt2<2){
+		while (isBlocked) { // While the player has moved, we try to keep on
 			isBlocked = true;
 			for (int i = 0; i < sizeHeight; i++) {
 				for (int j = 0; j < sizeWidth; j++) {
@@ -221,11 +222,14 @@ public class Board extends Cell {
 						}
 						if (board[i + 1][j].isBase()) {
 							bateau2 = true;
-						}*/
+						}
 					}
 				}
 			}
-			cpt2++;
+			
+		}
+		cpt2++;
+		System.out.println(""+cpt2);
 		}
 		int cpt = 0;
 		for (int k = 0; k < sizeHeight; k++) {
@@ -262,7 +266,7 @@ public class Board extends Cell {
 			}
 		}
 		return cpt == rocksNb;
-	}
+	}*/
 
 	/**
 	 * To string.
