@@ -80,6 +80,11 @@ public class Board extends Cell {
 			}
 		}
 		do {
+			for (int i=0; i < sizeHeight +2; i++) {
+				for (int j=0; j < sizeWidth +2; j++) {
+					board[i][j].setReachable(true);
+				}
+			}
 			for (int i = 0; i < sizeHeight + 2; i++) {
 				for (int j = 0; j < sizeWidth + 2; j++) {
 					if (j == 0 || i == 0 || i == sizeHeight + 1
