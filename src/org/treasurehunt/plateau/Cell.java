@@ -73,7 +73,7 @@ public class Cell {
 	}
 
 	public void removeCharacter() {
-		character = new Personnage(0, 0, 0, 0);
+		character = new Personnage(0, 0, 0, 0,0);
 	}
 
 	public Personnage getCharacter() {

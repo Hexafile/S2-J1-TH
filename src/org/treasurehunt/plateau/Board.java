@@ -330,7 +330,7 @@ public class Board extends Cell {
 	}
 
 	public Cell getCell(int x, int y) {
-		return board[y][x];
+		return board[x][y];
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {
@@ -366,7 +366,7 @@ public class Board extends Cell {
 						moves[i][j] = true;
 					else
 						moves[i][j] = false;
-					if (character.getType()==Constant.EXPLORER)
+					if (character.getType()==Constant.EXPLORER &&( (i==0&&j==0) || (i==2 && j==0) || (i==2 && j==0) || (i==0 && j==2)))
 						moves[i][j]=false;
 				}
 			}
