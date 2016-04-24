@@ -21,6 +21,7 @@ public class Game {
 		m.dispose();
 		
 		b.getBoard()[2][2].setCharacter(new Personnage(1, 2, 2,0,1));
+		b.getBoard()[b.getSizeHeight()-2][b.getSizeWidth()-2].setCharacter(new Personnage(2, 2, 2,0,1));
 
 		
 		for(int i = 0; i<l.get(0);i++){
