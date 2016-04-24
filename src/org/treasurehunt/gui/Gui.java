@@ -26,6 +26,8 @@ public class Gui extends JFrame {
 	private Board bd = new Board();;
 	private boolean start = true;
 	private int x_pos = -1, y_pos = -1;
+	private boolean[][] moves = null;
+
 
 	public Image sea, sand, chest, key, rock, base, soldat, lineV, lineH,
 			fleche_haut, fleche_bas, fleche_gauche, fleche_droite, croix,
@@ -110,7 +112,6 @@ public class Gui extends JFrame {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
 
-						boolean[][] moves = null;
 						if (i != 0 && j != 0
 								&& bd.getCell(i - 1, j - 1).isCharacter())
 							moves = bd.getMoves(bd.getCell(i - 1, j - 1)
@@ -192,11 +193,25 @@ public class Gui extends JFrame {
 						setX_pos(e.getX() / 40);
 						setY_pos(e.getY() / 40);
 					} else if (e.getX() / 40 == getX_pos() - 1
-							&& e.getY() / 40 == getY_pos()) {
+							&& e.getY() / 40 == getY_pos() && moves[1][0]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos() - 1,
 								getY_pos());
 						removeXY();
-
+					} else if (e.getX() / 40 == getX_pos() +1
+							&& e.getY() / 40 == getY_pos() && moves[1][2]) {
+						bd.move(getX_pos(), getY_pos(), getX_pos() + 1,
+								getY_pos());
+						removeXY();
+					} else if (e.getX() / 40 == getX_pos() 
+							&& e.getY() / 40 == getY_pos() -1 && moves[0][1]) {
+						bd.move(getX_pos(), getY_pos(), getX_pos() ,
+								getY_pos()-1);
+						removeXY();
+					} else if (e.getX() / 40 == getX_pos() 
+							&& e.getY() / 40 == getY_pos() +1 && moves[2][1]) {
+						bd.move(getX_pos(), getY_pos(), getX_pos() ,
+								getY_pos()+1);
+						removeXY();
 					} else {
 						removeXY();
 					}
