@@ -319,7 +319,7 @@ public class Board extends Cell {
 	}
 
 	public Cell getCell(int x, int y) {
-		return board[y][x];
+		return board[x][y];
 	}
 
 	public void move(int xpos, int ypos, int x, int y) {

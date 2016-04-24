@@ -25,9 +25,8 @@ public class Gui extends JFrame {
 	private JComponent menu;
 	private Board bd = new Board();;
 	private boolean start = true;
-	private int x_pos = -1, y_pos = -1;
+	private int x_pos = -2, y_pos = -2;
 	private boolean[][] moves = null;
-
 
 	public Image sea, sand, chest, key, rock, base, soldat, lineV, lineH,
 			fleche_haut, fleche_bas, fleche_gauche, fleche_droite, croix,
@@ -112,14 +111,10 @@ public class Gui extends JFrame {
 							g.drawImage(lineH, i * 40, j * 40, this);
 						}
 
-						if (i != 0 && j != 0
-								&& bd.getCell(i - 1, j - 1).isCharacter())
+						if (i - 1 == getX_pos() && j - 1 == getY_pos()
+								&& bd.getCell(i - 1, j - 1).isCharacter()) {
 							moves = bd.getMoves(bd.getCell(i - 1, j - 1)
 									.getCharacter());
-
-						// Display action
-
-						if (moves != null ) {
 							if (moves[0][0])
 								;
 							if (moves[0][1])
@@ -137,7 +132,7 @@ public class Gui extends JFrame {
 								;
 							if (moves[2][1])
 								g.drawImage(fleche_bas, (i - 1) * 40,
-										(j - 1) * 40 +40, this);
+										(j - 1) * 40 + 40, this);
 							if (moves[2][2])
 								;
 						}
@@ -180,38 +175,47 @@ public class Gui extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Detecte fermeture de fenetre
 				if (e.getX() >= bd.getSizeHeight() * 40 + 256 && e.getY() < 29) {
 					System.exit(DISPOSE_ON_CLOSE);
+					// Detecte reduction de la fenetre
 				} else if (e.getX() >= bd.getSizeHeight() * 40 + 225
 						&& e.getY() < 29) {
 					f.setExtendedState(HIDE_ON_CLOSE);
 				}
 
+				// Detecte sur Board
 				if (e.getX() / 40 < bd.getSizeHeight()
 						&& e.getY() / 40 < bd.getSizeWidth()) {
+					// Si Personnage
 					if (bd.getCell(e.getX() / 40, e.getY() / 40).isCharacter()) {
 						setX_pos(e.getX() / 40);
 						setY_pos(e.getY() / 40);
+						// Vers droite
 					} else if (e.getX() / 40 == getX_pos() - 1
 							&& e.getY() / 40 == getY_pos() && moves[1][0]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos() - 1,
 								getY_pos());
 						removeXY();
-					} else if (e.getX() / 40 == getX_pos() +1
+						// Vers gauche
+					} else if (e.getX() / 40 == getX_pos() + 1
 							&& e.getY() / 40 == getY_pos() && moves[1][2]) {
 						bd.move(getX_pos(), getY_pos(), getX_pos() + 1,
 								getY_pos());
 						removeXY();
-					} else if (e.getX() / 40 == getX_pos() 
-							&& e.getY() / 40 == getY_pos() -1 && moves[0][1]) {
-						bd.move(getX_pos(), getY_pos(), getX_pos() ,
-								getY_pos()-1);
+						// Vers haut
+					} else if (e.getX() / 40 == getX_pos()
+							&& e.getY() / 40 == getY_pos() - 1 && moves[0][1]) {
+						bd.move(getX_pos(), getY_pos(), getX_pos(),
+								getY_pos() - 1);
 						removeXY();
-					} else if (e.getX() / 40 == getX_pos() 
-							&& e.getY() / 40 == getY_pos() +1 && moves[2][1]) {
-						bd.move(getX_pos(), getY_pos(), getX_pos() ,
-								getY_pos()+1);
+						// Vers bas
+					} else if (e.getX() / 40 == getX_pos()
+							&& e.getY() / 40 == getY_pos() + 1 && moves[2][1]) {
+						bd.move(getX_pos(), getY_pos(), getX_pos(),
+								getY_pos() + 1);
 						removeXY();
+						// Sinon remove les coord du Personnage en cache
 					} else {
 						removeXY();
 					}
@@ -253,7 +257,7 @@ public class Gui extends JFrame {
 	}
 
 	public void removeXY() {
-		setX_pos(-1);
-		setY_pos(-1);
+		setX_pos(-2);
+		setY_pos(-2);
 	}
 }

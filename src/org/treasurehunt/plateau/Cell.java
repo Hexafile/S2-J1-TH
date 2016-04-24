@@ -89,7 +89,8 @@ public class Cell {
 	}
 
 	public void setReachable(boolean b) {
-		this.reachable = b;
+		if(b==false && getObstacle()!= Constant.GROUND)this.reachable = b;
+		else if(b==true && getObstacle()== Constant.GROUND)this.reachable = b;
 	}
 
 	public int getVisible() {
