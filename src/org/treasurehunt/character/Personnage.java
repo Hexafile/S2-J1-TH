@@ -66,6 +66,14 @@ public class Personnage {
 	public int getmaxEnergy(){
 		return this.maxenergy;
 	}
+	
+	public void setEnergy(int energy) {
+		this.energy=energy;
+	}
+	
+	public int setMaxEnergy() {
+		return this.energy;
+	}
 
 	public void Energy() {
 		if(getEnergy() > getmaxEnergy()){
