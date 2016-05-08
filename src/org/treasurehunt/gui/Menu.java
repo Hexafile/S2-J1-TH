@@ -1,5 +1,7 @@
 package org.treasurehunt.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +13,12 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-public class Menu extends JFrame implements ActionListener {
+public class Menu extends JFrame implements ActionListener{
 
 	private int ex1;
 	private int ex2;
@@ -35,53 +40,69 @@ public class Menu extends JFrame implements ActionListener {
 	private boolean enterPressed = false;
 
 	public Menu() {
+		setLayout(new BorderLayout());
 
-		setSize(50, 200);
-		setLayout(new GridLayout(10, 2));
-
-		add(new JLabel("Equipe 1 :"));
-		add(new JLabel("Equipe 2 :"));
-		add(new JLabel("Explorer :"));
-		add(new JLabel("Explorer :"));
+		JLabel title = new JLabel("Treasure Hunt");
+		title.setFont(new Font(title.getFont().getName(), Font.PLAIN,24));
+		
+		JPanel jp1 = new JPanel();
+		jp1.add(title);
+		add(jp1,BorderLayout.NORTH);
+		
+		JLabel ex = new JLabel("Explorateur");
+		JLabel sc = new JLabel("Piègeur");
+		JLabel th = new JLabel("Voleur");
+		JLabel wa = new JLabel("Guerrier");
 		j1 = new JTextField("0", 1);
 		j1.addActionListener(this);
-		j2 = new JTextField("0", 1);
-		j2.addActionListener(this);
-		add(j1);
-		add(j2);
-		add(new JLabel("Scavenger :"));
-		add(new JLabel("Scavenger :"));
-		j3 = new JTextField("0", 1);
-		j3.addActionListener(this);
-		j4 = new JTextField("0", 1);
-		j4.addActionListener(this);
-		add(j3);
-		add(j4);
-		add(new JLabel("Thief: "));
-		add(new JLabel("Thief: "));
 		j5 = new JTextField("0", 1);
 		j5.addActionListener(this);
-		j6 = new JTextField("0", 1);
-		j6.addActionListener(this);
-		add(j5);
-		add(j6);
-		add(new JLabel("Warrior :"));
-		add(new JLabel("Warrior :"));
+		j3 = new JTextField("0", 1);
+		j3.addActionListener(this);
 		j7 = new JTextField("0", 1);
 		j7.addActionListener(this);
+		
+		JPanel jp2 = new JPanel();
+		jp2.setLayout(new GridLayout(5, 2));
+		jp2.add(ex);
+		jp2.add(j1);
+		jp2.add(sc);
+		jp2.add(j3);
+		jp2.add(th);
+		jp2.add(j5);
+		jp2.add(wa);
+		jp2.add(j7);
+		add(jp2,BorderLayout.WEST);
+		
+		j2 = new JTextField("0", 1);
+		j2.addActionListener(this);
+		j4 = new JTextField("0", 1);
+		j4.addActionListener(this);
+		j6 = new JTextField("0", 1);
+		j6.addActionListener(this);
 		j8 = new JTextField("0", 1);
 		j8.addActionListener(this);
-		add(j7);
-		add(j8);
-		JButton enter = new JButton("Enter");
+		
+		add(new JSeparator(SwingConstants.VERTICAL),BorderLayout.CENTER);
+		
+		JPanel jp3 = new JPanel();
+		jp3.setLayout(new GridLayout(5, 1));
+		jp3.add(j2);
+		jp3.add(j4);
+		jp3.add(j6);
+		jp3.add(j8);
+		add(jp3,BorderLayout.EAST);
+		
+		JButton enter = new JButton("Jouer !");
 		enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				enterPressed = true;
 			}
 		});
-		add(enter);
+		add(enter, BorderLayout.SOUTH);
 
 		setLocation(200, 200);
+		setTitle("Menu");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 		setVisible(true);
